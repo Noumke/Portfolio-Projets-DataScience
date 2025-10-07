@@ -1,0 +1,9 @@
+Conversion en datetime
+Formattage des dates en DD/MM/YYYY
+Mise en majuscule des noms de diagnostiques
+Remplissage des valeurs manquantes dans diagnotiques avec la valeur la plus frequente
+Ajout de la colonne Age calculée en soustrayant l'année de naissance de l'année actuelle
+Ajout de la colonne Statut pour savoir si le patient est sain ou malade
+Fusion des fichiers fichiers_hospital_data et additional_hospital_data
+Verification des doublons
+Suppression des doublons sur la colonne PatientID

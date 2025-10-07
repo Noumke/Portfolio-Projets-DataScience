@@ -1,0 +1,35 @@
+Fonctionnalités à ajouter : 
+
+# Fonctionnalités prioritaires
+Comment faire pour que les dinosaures ajoutés soient sensibles à la faim ? - Faire la fonction de modification d'une donnée
+dinosaure.
+Ajuster et équilibrer le jeu :
+	- Ajuster la faim (mort en 3 min. donc calculer)
+	- Ajuster la somme d'argent engrangée chaque minute
+	- Ajuster l'affection et la santé
+	- Mettre des pramètres de départ différents en fonction des dinosaures
+Déterminer pourquoi certains dinosaures ne fonctionnent pas à l'achat.
+
+# Fonctionnalités utiles
+Lorsque l'on sélectionne un dinosaure, faire en sorte que le joueur attende lorsque l'on fait une action. Si il n'attend pas, 
+il y a des chances qu'il ferme le jeu, et donc qu'il supprime toute sa progression.
+
+# Fonctionnalités à ajouter après l'austement du jeu.
+Potion de réduction de la faim : IDEM, les dinosaures voient leur faim baisser pendant un certain temps.
+Potion de résistance à la dépression : IDEM, pour l'affection.
+Potion de résistance vitale : IDEM, pour la santé.
+
+# Fonctionnalités optionnelles
+Potion de jolitude : Fait une petite action qui fait briller le personnage.
+
+
+
+
+
+
+
+
+
+
+
+
