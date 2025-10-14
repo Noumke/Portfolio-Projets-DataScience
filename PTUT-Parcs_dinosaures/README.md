@@ -48,6 +48,8 @@ Le projet est réalisé par notre groupe et est actuellement en cours de dévelo
 - Dictionnaires pour la gestion des objets et modules du jeu.
 
 ## Visuels du jeu
-![Visuel du jeu]((https://github.com/Noumke/Portfolio-Projets-DataScience/blob/main/Visuel_du_jeu.png))
+
+![Visuel du jeu](https://github.com/Noumke/Portfolio-Projets-DataScience/blob/main/Visuel_du_jeu.png)  
+
 *Exemple : le personnage se déplace pour nourrir et soigner les dinosaures, accéder au menu et interagir avec le marchand.*
 
