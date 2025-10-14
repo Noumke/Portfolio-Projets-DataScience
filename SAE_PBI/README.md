@@ -44,4 +44,7 @@ L’objectif est de comprendre les dynamiques régionales et l’impact du trafi
 
 ## Quelques visualisations illustratifs
 
+![Nombre de départ par type de train par année](graphique1.png)
+
+
 
