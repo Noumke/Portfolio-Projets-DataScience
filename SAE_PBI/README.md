@@ -44,7 +44,7 @@ L’objectif est de comprendre les dynamiques régionales et l’impact du trafi
 
 ## Quelques visualisations illustratifs
 
-![Nombre de départ par type de train par année](graphique1.png)
+![Nombre de départ par type de train par année](https://github.com/Noumke/Portfolio-Projets-DataScience/blob/main/graphique1.png?raw=true)
 
 
 
