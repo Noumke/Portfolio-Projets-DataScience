@@ -47,4 +47,7 @@ L’objectif est de comprendre les dynamiques régionales et l’impact du trafi
 ![Nombre de départ par type de train par année](https://github.com/Noumke/Portfolio-Projets-DataScience/blob/main/graphique1.png?raw=true)
 
 
+![Nombre de voyageur par année et par region](https://github.com/Noumke/Portfolio-Projets-DataScience/blob/main/graphique%202.png)
+
+
 
