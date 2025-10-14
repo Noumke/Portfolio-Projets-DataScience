@@ -43,6 +43,5 @@ L’objectif est de comprendre les dynamiques régionales et l’impact du trafi
 - Rapport final présentant le contexte, la démarche, les résultats et les conclusions.
 
 ## Quelques visualisations illustratifs
-![le nombre de depart du type de Train par année]([https://mon-site.com/graphique.png](https://drive.google.com/file/d/1mNL0sYYbdCR7S3v2UKxeMPb5JIMRCSnd/view?usp=drive_link))
 
 
