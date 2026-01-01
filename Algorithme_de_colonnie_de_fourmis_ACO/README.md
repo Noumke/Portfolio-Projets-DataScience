@@ -78,8 +78,7 @@ Comment un ensemble d’agents simples, disposant uniquement d’informations lo
 ## Quelques visualisations illustratives
 
 ### Environnement de simulation et architecture du projet
-![Architecture et environnement de simulation](Portfolio-Projets-DataScience/Algorithme_de_colonnie_de_fourmis_ACO/Capture d'écran 2025-12-24 113419.png)
-
-### Émergence du chemin optimal
-![Chemin optimal et évolution des phéromones](Algorithme_de_colonnie_de_fourmis_ACO/im10.png)
+![Architecture et environnement de simulation](images/architecture_simulation.png)
+### Émergence du chemin optimal dans un cas concrêt 
+[Chemin optimal et évolution des phéromones](images/chemin_optimal.png)
 
