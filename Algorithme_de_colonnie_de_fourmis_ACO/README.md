@@ -77,8 +77,8 @@ Comment un ensemble d’agents simples, disposant uniquement d’informations lo
 
 ## Quelques visualisations illustratives
 
-### Environnement de simulation et architecture du projet
+### Environnement de simulation 
 ![Architecture et environnement de simulation](images/architecture_simulation.png)
-### Émergence du chemin optimal dans un cas concrêt 
-[Chemin optimal et évolution des phéromones](images/chemin_optimal.png)
+### Émergence du chemin optimal dans un cas concrêt entre une salle de classe donnée et le restaurant univesiataire 
+![Chemin optimal et évolution des phéromones](images/chemin_optimal.png)
 
