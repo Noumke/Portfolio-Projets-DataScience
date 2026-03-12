@@ -1,4 +1,4 @@
-# 🕷️ Football Scraper — FBref 2024-25
+# 🕷️ Football Scraper - FBref 2024-25
 
 > Scripts Python pour collecter automatiquement les données des 5 grands championnats européens depuis [FBref.com](https://fbref.com), avec contournement Cloudflare via Playwright.
 
