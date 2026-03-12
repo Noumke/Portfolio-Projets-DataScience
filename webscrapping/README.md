@@ -108,7 +108,7 @@ pip install -r scrapping/requirements.txt
 
 ---
 
-## 🕷️ Partie 1 — Lancer le scraping
+## 🕷️ Partie 1 Lancer le scraping
 
 ```bash
 cd scrapping
@@ -125,7 +125,7 @@ python main.py
 
 ---
 
-## 🖥️ Partie 2 — Lancer le dashboard
+## 🖥️ Partie 2 Lancer le dashboard
 
 ```bash
 cd football_dashboard/football_dashboard
