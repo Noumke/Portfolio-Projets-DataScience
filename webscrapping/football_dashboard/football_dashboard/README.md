@@ -1,4 +1,4 @@
-# ⚽ Football Stats Dashboard — Saison 2024-25
+# ⚽ Football Stats Dashboard - Saison 2024-25
 
 Dashboard Django interactif pour explorer les données des 5 grands championnats européens.
 
