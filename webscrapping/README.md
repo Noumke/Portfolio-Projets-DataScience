@@ -120,8 +120,8 @@ playwright install chromium
 python main.py
 ```
 
-> ⚠️ Durée estimée : **2 à 4 heures** (délais anti-Cloudflare inclus).  
-> La base `football.db` est déjà fournie — cette étape est optionnelle.
+> ⚠️ Durée estimée : ** 5 à 8 minutes** (délais anti-Cloudflare inclus).  
+> La base `football.db` est déjà fournie -cette étape est optionnelle.
 
 ---
 
@@ -206,7 +206,7 @@ python run.py
 ## ⚠️ Avertissement légal
 
 Ce projet est réalisé à des fins **éducatives uniquement**.  
-Les données proviennent de [FBref.com](https://fbref.com) — Sports Reference LLC.
+Les données proviennent de [FBref.com](https://fbref.com) : Sports Reference LLC.
 
 ---
 
