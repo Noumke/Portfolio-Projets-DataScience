@@ -1,4 +1,4 @@
-# ⚽ Football Stats Dashboard — Saison 2024-25
+# ⚽ Football Stats Dashboard - Saison 2024-25
 
 > Projet complet de **Data Science appliquée au football** : collecte automatique de données depuis FBref via web scraping, stockage SQLite, et visualisation interactive via un tableau de bord Django.
 
@@ -164,7 +164,7 @@ python run.py
 
 ---
 
-## 🔍 Insights clés — Saison 2024-25
+## 🔍 Insights clés - Saison 2024-25
 
 ### 🥇 Top 5 Buteurs
 | Joueur | Club | Ligue | Buts | Assists |
@@ -213,5 +213,5 @@ Les données proviennent de [FBref.com](https://fbref.com) : Sports Reference LL
 ## 👤 Auteur
 
 **Noumke TOURE**  
-Étudiant en Data Science — Université Clermont Auvergne  
+Etudiant en Data Science — Université Clermont Auvergne  
 🔗 [Portfolio GitHub](https://github.com/Noumke/Portfolio-Projets-DataScience)
