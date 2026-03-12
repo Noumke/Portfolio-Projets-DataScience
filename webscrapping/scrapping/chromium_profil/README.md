@@ -178,12 +178,12 @@ Toutes les actions sont enregistrées dans `scraping.log` :
 ## ⚠️ Avertissement légal
 
 Ce projet est réalisé à des fins **éducatives uniquement**.  
-Les données appartiennent à [FBref.com](https://fbref.com) — Sports Reference LLC.  
+Les données appartiennent à [FBref.com](https://fbref.com) - Sports Reference LLC.  
 Respectez les conditions d'utilisation du site et limitez la fréquence des requêtes.
 
 ---
 
 ## 👤 Auteur
 
-**Noumke TOURE** — Étudiant Data Science, Université Clermont Auvergne  
+**Noumke TOURE** - Etudiant Data Science, Université Clermont Auvergne  
 🔗 [Portfolio](https://github.com/Noumke/Portfolio-Projets-DataScience)
