@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}FootballStats 2024-25{% endblock %}</title>
+    {% load static %}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar">
+    <a href="/" class="navbar-brand">⚽ <span>Football</span>Stats</a>
+    <ul class="navbar-links">
+        <li><a href="/" {% if request.path == '/' %}class="active"{% endif %}>🏠 Accueil</a></li>
+        <li><a href="/joueurs/" {% if '/joueurs' in request.path %}class="active"{% endif %}>👤 Joueurs</a></li>
+        <li><a href="/equipes/" {% if '/equipes' in request.path %}class="active"{% endif %}>🛡️ Équipes</a></li>
+        <li><a href="/matchs/" {% if '/matchs' in request.path %}class="active"{% endif %}>📋 Matchs</a></li>
+    </ul>
+    <div class="navbar-leagues">
+        {% for l in ligues %}
+        <a href="/ligue/{{ l }}/">
+            {% if l == "Premier League" %}🏴󠁧󠁢󠁥󠁮󠁧󠁿{% elif l == "La Liga" %}🇪🇸{% elif l == "Serie A" %}🇮🇹{% elif l == "Ligue 1" %}🇫🇷{% elif l == "Bundesliga" %}🇩🇪{% endif %}
+            {{ l }}
+        </a>
+        {% endfor %}
+    </div>
+</nav>
+
+<main class="container">
+    {% block content %}{% endblock %}
+</main>
+
+<script>
+// Couleurs globales Chart.js
+Chart.defaults.color = '#94a3b8';
+Chart.defaults.borderColor = '#2a3550';
+Chart.defaults.font.family = "'Inter', sans-serif";
+
+// Système d'onglets
+function initTabs() {
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const group = btn.dataset.tabGroup;
+            const target = btn.dataset.tab;
+            document.querySelectorAll(`[data-tab-group="${group}"]`).forEach(b => b.classList.remove('active'));
+            document.querySelectorAll(`[data-tab-content="${group}"]`).forEach(c => c.classList.remove('active'));
+            btn.classList.add('active');
+            const content = document.querySelector(`[data-tab-content="${group}"][data-tab="${target}"]`);
+            if (content) content.classList.add('active');
+        });
+    });
+}
+
+document.addEventListener('DOMContentLoaded', initTabs);
+</script>
+
+{% block scripts %}{% endblock %}
+</body>
+</html>
