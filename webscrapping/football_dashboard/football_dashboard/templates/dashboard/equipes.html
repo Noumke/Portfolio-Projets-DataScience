@@ -1,0 +1,174 @@
+{% extends 'dashboard/base.html' %}
+{% block title %}Équipes — Football Stats 2024-25{% endblock %}
+
+{% block content %}
+
+<div class="section-title">
+    🛡️ Analyse des Équipes — Saison 2024-25
+    <span class="subtitle">Comparaison offensive & défensive</span>
+</div>
+
+<!-- Filtres -->
+<form method="GET" class="filter-bar">
+    <select name="ligue" onchange="this.form.submit()">
+        <option value="">🌍 Toutes les ligues</option>
+        {% for l in ligues %}
+        <option value="{{ l }}" {% if l == ligue_filtre %}selected{% endif %}>
+            {% if l == "Premier League" %}🏴󠁧󠁢󠁥󠁮󠁧󠁿{% elif l == "La Liga" %}🇪🇸{% elif l == "Serie A" %}🇮🇹{% elif l == "Ligue 1" %}🇫🇷{% elif l == "Bundesliga" %}🇩🇪{% endif %}
+            {{ l }}
+        </option>
+        {% endfor %}
+    </select>
+    {% if ligue_filtre %}
+    <a href="/equipes/" class="btn btn-outline" style="font-size:.78rem;">✕ Toutes les ligues</a>
+    {% endif %}
+</form>
+
+<!-- Top attaques / défenses graphiques -->
+<div class="grid-2" style="margin-bottom:1.5rem;">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">⚔️ Top 10 Meilleures Attaques</div>
+            <span style="font-size:.75rem; color:var(--text-muted);">Buts/match</span>
+        </div>
+        <div class="chart-container-lg">
+            <canvas id="attChart"></canvas>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">🧱 Top 10 Meilleures Défenses</div>
+            <span style="font-size:.75rem; color:var(--text-muted);">Buts encaissés/match</span>
+        </div>
+        <div class="chart-container-lg">
+            <canvas id="defChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<!-- Tableau détaillé -->
+<div class="card">
+    <div class="card-header">
+        <div class="card-title">📊 Statistiques complètes — {{ stats|length }} équipes</div>
+    </div>
+    <div style="overflow-x:auto;">
+        <table class="table-standings">
+            <thead>
+                <tr>
+                    <th style="text-align:left">Équipe</th>
+                    <th>Ligue</th>
+                    <th title="Matchs joués">MJ</th>
+                    <th title="Buts marqués">BP</th>
+                    <th title="Buts encaissés">BC</th>
+                    <th title="Différence de buts">+/-</th>
+                    <th title="Buts marqués par match">B/M</th>
+                    <th title="Buts encaissés par match">BC/M</th>
+                    <th title="Possession moyenne">Poss%</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for e in stats %}
+                <tr>
+                    <td style="text-align:left;">
+                        <div class="team-cell">
+                            {% if e.logo %}
+                            <img src="/media/{{ e.logo }}"
+                                 onerror="this.style.display='none'"
+                                 class="team-logo" alt="">
+                            {% endif %}
+                            <span style="font-weight:600;">{{ e.equipe }}</span>
+                        </div>
+                    </td>
+                    <td>
+                        <span class="league-pill" style="font-size:.65rem;">
+                            {% if e.ligue == "Premier League" %}🏴󠁧󠁢󠁥󠁮󠁧󠁿{% elif e.ligue == "La Liga" %}🇪🇸{% elif e.ligue == "Serie A" %}🇮🇹{% elif e.ligue == "Ligue 1" %}🇫🇷{% elif e.ligue == "Bundesliga" %}🇩🇪{% endif %}
+                        </span>
+                    </td>
+                    <td>{{ e.matchs }}</td>
+                    <td style="color:#10b981; font-weight:700;">{{ e.buts_marques }}</td>
+                    <td style="color:#ef4444; font-weight:700;">{{ e.buts_encaisses }}</td>
+                    <td style="font-weight:700; {% if e.diff_buts > 0 %}color:#10b981{% elif e.diff_buts < 0 %}color:#ef4444{% endif %};">
+                        {% if e.diff_buts > 0 %}+{% endif %}{{ e.diff_buts }}
+                    </td>
+                    <td>{{ e.ratio_att }}</td>
+                    <td>{{ e.ratio_def }}</td>
+                    <td>
+                        <div style="display:flex; align-items:center; gap:.4rem;">
+                            <div class="progress-track" style="width:60px;">
+                                <div class="progress-fill"
+                                     style="width:{{ e.possession|floatformat:0 }}%;
+                                            background:{% if e.possession >= 55 %}#3b82f6{% elif e.possession >= 48 %}#10b981{% else %}#6b7280{% endif %};">
+                                </div>
+                            </div>
+                            <span style="font-size:.78rem;">{{ e.possession|floatformat:1 }}%</span>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+const attData = {{ att_chart|safe }};
+const defData = {{ def_chart|safe }};
+
+// Top attaques — barres horizontales
+const attCtx = document.getElementById('attChart').getContext('2d');
+new Chart(attCtx, {
+    type: 'bar',
+    data: {
+        labels: attData.labels,
+        datasets: [{
+            label: 'Buts/match',
+            data: attData.data,
+            backgroundColor: attData.colors.map(c => c + 'bb'),
+            borderColor: attData.colors,
+            borderWidth: 2,
+            borderRadius: 5,
+        }]
+    },
+    options: {
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+            x: { grid: { color: '#2a3550' }, min: 0, max: 3.5 },
+            y: { grid: { display: false }, ticks: { font: { size: 11 } } }
+        }
+    }
+});
+
+// Top défenses — barres horizontales (inverser l'axe : moins = mieux)
+const defCtx = document.getElementById('defChart').getContext('2d');
+new Chart(defCtx, {
+    type: 'bar',
+    data: {
+        labels: defData.labels,
+        datasets: [{
+            label: 'Buts enc./match',
+            data: defData.data,
+            backgroundColor: defData.colors.map(c => c + 'bb'),
+            borderColor: defData.colors,
+            borderWidth: 2,
+            borderRadius: 5,
+        }]
+    },
+    options: {
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+            x: { grid: { color: '#2a3550' }, min: 0, max: 2 },
+            y: { grid: { display: false }, ticks: { font: { size: 11 } } }
+        }
+    }
+});
+</script>
+{% endblock %}
