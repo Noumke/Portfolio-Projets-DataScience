@@ -213,5 +213,5 @@ Les données proviennent de [FBref.com](https://fbref.com) : Sports Reference LL
 ## 👤 Auteur
 
 **Noumke TOURE**  
-Etudiant en Data Science — Université Clermont Auvergne  
+Etudiant en Data Science - Université Clermont Auvergne  
 🔗 [Portfolio GitHub](https://github.com/Noumke/Portfolio-Projets-DataScience)
