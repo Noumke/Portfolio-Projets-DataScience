@@ -1,0 +1,15 @@
+# fichiers Python compilés
+__pycache__/
+*.pyc
+*.pyo
+
+# base de données SQLite
+*.sqlite3
+
+# environnement virtuel
+venv/
+env/
+
+# fichiers système
+.DS_Store
+Thumbs.db

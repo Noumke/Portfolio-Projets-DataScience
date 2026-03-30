@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guerre des Animaux</title>
+  <style>
+    /* variables CSS globales */
+    :root {
+      --bg:      #0a0e17; --surface: #111827; --card:   #1a2236;
+      --border:  #2d3a55; --accent:  #f59e0b; --accent2:#10b981;
+      --red:     #ef4444; --text:    #e2e8f0; --muted:  #64748b;
+      --font:    'Courier New', monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: var(--font); min-height: 100vh; }
+
+    /* style du header */
+    header {
+      background: var(--surface); border-bottom: 2px solid var(--accent);
+      padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between;
+    }
+    .logo { font-size: 1.5rem; font-weight: bold; color: var(--accent); letter-spacing: 2px; }
+    .logo span { color: var(--text); }
+    #authBar { display: flex; gap: .75rem; align-items: center; font-size: .85rem; }
+    #authBar .user-badge {
+      background: var(--card); border: 1px solid var(--accent2);
+      padding: .3rem .8rem; border-radius: 4px; color: var(--accent2);
+    }
+
+    /* onglets de navigation */
+    .tabs { display: flex; border-bottom: 2px solid var(--border); background: var(--surface); }
+    .tab-btn {
+      padding: .75rem 1.5rem; cursor: pointer; background: none; border: none;
+      color: var(--muted); font-family: var(--font); font-size: .9rem; letter-spacing: 1px;
+      border-bottom: 3px solid transparent; margin-bottom: -2px; transition: .2s;
+    }
+    .tab-btn:hover { color: var(--text); }
+    .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+    .tab-panel { display: none; padding: 2rem; max-width: 1100px; margin: 0 auto; }
+    .tab-panel.active { display: block; }
+
+    /* boutons génériques */
+    .btn {
+      padding: .5rem 1.2rem; border: none; cursor: pointer;
+      font-family: var(--font); font-size: .85rem; letter-spacing: 1px;
+      border-radius: 4px; transition: .2s;
+    }
+    .btn-primary { background: var(--accent); color: #000; font-weight: bold; }
+    .btn-primary:hover { filter: brightness(1.2); }
+    .btn-success { background: var(--accent2); color: #000; font-weight: bold; }
+    .btn-success:hover { filter: brightness(1.2); }
+    .btn-danger  { background: var(--red); color: #fff; }
+    .btn-danger:hover { filter: brightness(1.2); }
+    .btn-ghost { background: transparent; color: var(--muted); border: 1px solid var(--border); }
+    .btn-ghost:hover { color: var(--text); border-color: var(--text); }
+
+    /* champs de formulaire */
+    input, textarea, select {
+      background: var(--card); border: 1px solid var(--border); color: var(--text);
+      font-family: var(--font); font-size: .9rem; padding: .5rem .75rem;
+      border-radius: 4px; width: 100%; outline: none; transition: .2s;
+    }
+    input:focus, textarea:focus, select:focus { border-color: var(--accent); }
+    label { font-size: .8rem; color: var(--muted); margin-bottom: .25rem; display: block; }
+    .field { margin-bottom: 1rem; }
+
+    /* cartes génériques */
+    .card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 8px; padding: 1.25rem; margin-bottom: 1rem;
+    }
+    .card-title {
+      font-size: 1.1rem; color: var(--accent); margin-bottom: 1rem;
+      border-bottom: 1px solid var(--border); padding-bottom: .5rem;
+    }
+    .msg-error   { color: var(--red);    font-size: .9rem; margin-top: .5rem; }
+    .msg-success { color: var(--accent2); font-size: .9rem; margin-top: .5rem; }
+    .loading     { color: var(--muted); font-size: .9rem; font-style: italic; }
+
+    /* styles de l'armée */
+    .army-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .5rem; }
+    .army-name  { font-size: 1.4rem; color: var(--accent); font-weight: bold; }
+    .army-owner { font-size: .8rem; color: var(--muted); }
+    .army-desc  { color: var(--text); margin: .5rem 0; font-size: .9rem; }
+    .badge { display: inline-block; padding: .2rem .6rem; border-radius: 99px; font-size: .75rem; font-weight: bold; }
+    .badge-count { background: #1e3a5f; color: #60a5fa; }
+
+    /* grille des animaux */
+    .animal-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
+    .animal-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 8px; overflow: hidden; transition: .2s;
+    }
+    .animal-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .animal-img { width: 100%; height: 140px; object-fit: cover; }
+    .animal-img-placeholder {
+      width: 100%; height: 140px; background: var(--border);
+      display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: var(--muted);
+    }
+    .animal-body { padding: .75rem; }
+    .animal-name  { font-weight: bold; color: var(--accent); font-size: .95rem; }
+    .animal-breed { font-size: .75rem; color: var(--muted); margin-bottom: .5rem; }
+    .weapon-tag {
+      font-size: .7rem; background: #3b1f00; color: var(--accent);
+      border: 1px solid var(--accent); padding: .1rem .4rem; border-radius: 3px;
+      display: inline-block; margin-bottom: .5rem;
+    }
+    .animal-actions { display: flex; gap: .4rem; flex-wrap: wrap; margin-top: .5rem; }
+
+    /* modal (fenêtre popup) */
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,.7);
+      display: flex; align-items: center; justify-content: center; z-index: 100;
+    }
+    .modal-overlay.hidden { display: none; }
+    .modal { background: var(--surface); border: 2px solid var(--accent); border-radius: 10px; padding: 2rem; width: 360px; }
+    .modal-title { font-size: 1.2rem; color: var(--accent); margin-bottom: 1.5rem; }
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    @media (max-width: 600px) { .grid2 { grid-template-columns: 1fr; } }
+
+    /* cartes d'armes */
+    .weapon-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 6px; padding: .75rem; display: flex; align-items: center; gap: .75rem;
+    }
+    .weapon-name { font-weight: bold; color: var(--accent2); }
+    .weapon-dmg  { font-size: .8rem; color: var(--muted); }
+
+    /* vue publique des armées */
+    .pub-army { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; margin-bottom: .75rem; }
+    .pub-army-name  { color: var(--accent); font-weight: bold; font-size: 1.1rem; }
+    .pub-army-owner { color: var(--muted); font-size: .8rem; margin-bottom: .5rem; }
+    .pub-animal-list { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .5rem; }
+    .pub-animal-chip {
+      background: var(--surface); border: 1px solid var(--border);
+      padding: .2rem .6rem; border-radius: 4px; font-size: .8rem;
+      display: flex; align-items: center; gap: .3rem;
+    }
+  </style>
+</head>
+<body>
+
+<!-- modal de connexion -->
+<div class="modal-overlay" id="loginModal">
+  <div class="modal">
+    <div class="modal-title">CONNEXION : GUERRE DES ANIMAUX</div>
+    <div class="field">
+      <label>Nom d'utilisateur</label>
+      <input type="text" id="loginUsername" placeholder="dresseur1" />
+    </div>
+    <div class="field">
+      <label>Mot de passe</label>
+      <input type="password" id="loginPassword" placeholder="••••••••" />
+    </div>
+    <button class="btn btn-primary" style="width:100%" onclick="doLogin()">SE CONNECTER</button>
+    <div id="loginError" class="msg-error"></div>
+    <p style="margin-top:1rem;font-size:.8rem;color:var(--muted);">
+      Comptes test : <b>dresseur1</b> ou <b>dresseur2</b> / <b>motdepass123</b>
+    </p>
+  </div>
+</div>
+
+<!-- en-tête de la page -->
+<header>
+  <div class="logo"><span>GUERRE</span> DES ANIMAUX</div>
+  <div id="authBar">
+    <span id="userBadge" class="user-badge" style="display:none"></span>
+    <button class="btn btn-ghost" id="authBtn" onclick="toggleAuth()">CONNEXION</button>
+  </div>
+</header>
+
+<!-- onglets de navigation -->
+<div class="tabs">
+  <button class="tab-btn active" data-tab="tabPublic">TOUTES LES ARMEES</button>
+  <button class="tab-btn" data-tab="tabMyArmy">MON ARMEE</button>
+  <button class="tab-btn" data-tab="tabWeapons">ARMES</button>
+</div>
+
+<!-- onglet 1 : vue publique de toutes les armées -->
+<div class="tab-panel active" id="tabPublic">
+  <h2 style="color:var(--accent);margin-bottom:1rem;">Toutes les armées en présence</h2>
+  <div id="publicArmiesContainer"><p class="loading">[ CHARGEMENT... ]</p></div>
+</div>
+
+<!-- onglet 2 : gestion de mon armée -->
+<div class="tab-panel" id="tabMyArmy">
+  <div class="card">
+    <div class="card-title">Mon Armée</div>
+    <div id="myArmyInfo"><p class="loading">[ CHARGEMENT... ]</p></div>
+    <div id="armyForm" style="display:none;margin-top:1rem;">
+      <div class="grid2">
+        <div class="field">
+          <label>Nom de l'armée</label>
+          <input type="text" id="armyName" placeholder="L'Armée des Crocs..." />
+        </div>
+        <div class="field">
+          <label>Description</label>
+          <input type="text" id="armyDesc" placeholder="Notre armée est invincible..." />
+        </div>
+      </div>
+      <button class="btn btn-primary" onclick="saveArmy()">ENREGISTRER</button>
+      <button class="btn btn-ghost" onclick="document.getElementById('armyForm').style.display='none'">ANNULER</button>
+      <div id="armyFormMsg"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title" style="display:flex;justify-content:space-between;align-items:center;">
+      <span>Mes Animaux</span>
+      <button class="btn btn-success" onclick="toggleAddAnimalForm()">+ AJOUTER</button>
+    </div>
+    <div id="addAnimalForm" style="display:none;margin-bottom:1rem;">
+      <div class="grid2">
+        <div class="field"><label>Nom</label><input type="text" id="animalName" placeholder="Rex" /></div>
+        <div class="field"><label>Race</label><input type="text" id="animalBreed" placeholder="Labrador" /></div>
+      </div>
+      <div class="field">
+        <label>URL de l'image (optionnel)</label>
+        <input type="url" id="animalImg" placeholder="https://..." />
+      </div>
+      <button class="btn btn-success" onclick="addAnimal()">AJOUTER A L'ARMEE</button>
+      <div id="addAnimalMsg"></div>
+    </div>
+    <div id="myAnimalsGrid" class="animal-grid"><p class="loading">[ CHARGEMENT... ]</p></div>
+  </div>
+
+  <!-- modal pour assigner une arme à un animal -->
+  <div class="modal-overlay hidden" id="weaponModal">
+    <div class="modal">
+      <div class="modal-title">Arme de <span id="weaponAnimalName"></span></div>
+      <div class="field">
+        <label>Choisir une arme existante</label>
+        <select id="weaponSelect"><option value="">— Sélectionner —</option></select>
+      </div>
+      <p style="color:var(--muted);font-size:.8rem;margin:.5rem 0;">— OU créer une nouvelle arme —</p>
+      <div class="grid2">
+        <div class="field"><label>Nom</label><input type="text" id="newWeaponName" placeholder="Griffe acérée" /></div>
+        <div class="field"><label>Dégâts</label><input type="number" id="newWeaponDamage" placeholder="30" min="0" /></div>
+      </div>
+      <div class="field"><label>Description</label><input type="text" id="newWeaponDesc" placeholder="Description..." /></div>
+      <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
+        <button class="btn btn-primary" onclick="assignWeapon()">ASSIGNER</button>
+        <button class="btn btn-danger" onclick="removeWeapon()">RETIRER</button>
+        <button class="btn btn-ghost" onclick="closeWeaponModal()">ANNULER</button>
+      </div>
+      <div id="weaponModalMsg"></div>
+    </div>
+  </div>
+</div>
+
+<!-- onglet 3 : liste de toutes les armes -->
+<div class="tab-panel" id="tabWeapons">
+  <h2 style="color:var(--accent);margin-bottom:1rem;">Arsenal disponible</h2>
+  <div class="card" id="createWeaponCard" style="display:none;">
+    <div class="card-title">Créer une nouvelle arme</div>
+    <div class="grid2">
+      <div class="field"><label>Nom</label><input type="text" id="wName" placeholder="Nom de l'arme" /></div>
+      <div class="field"><label>Dégâts</label><input type="number" id="wDamage" placeholder="0" min="0" /></div>
+    </div>
+    <div class="field"><label>Description</label><textarea id="wDesc" rows="2" placeholder="Description..."></textarea></div>
+    <button class="btn btn-primary" onclick="createWeapon()">CREER L'ARME</button>
+    <div id="weaponCreateMsg"></div>
+  </div>
+  <div id="weaponsList"><p class="loading">[ CHARGEMENT... ]</p></div>
+</div>
+
+<!-- chargement des fichiers JS dans l'ordre -->
+<script src="api.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
